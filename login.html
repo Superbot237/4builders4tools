@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login // 4B4T</title>
+  <style>
+    :root {
+      --bg: #05080d;
+      --bg-soft: #0d1520;
+      --line: rgba(255,255,255,0.08);
+      --text: #edf6ff;
+      --muted: #9aa9bb;
+      --blue: #4a8dff;
+      --blue-soft: #7fc7ff;
+      --green: #55d98a;
+      --red: #ff4d4d;
+      --shadow: 0 24px 70px rgba(0, 0, 0, 0.45);
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      background:
+        radial-gradient(circle at top left, rgba(74,141,255,0.18), transparent 22%),
+        radial-gradient(circle at bottom right, rgba(255,77,77,0.15), transparent 24%),
+        linear-gradient(180deg, #04070b 0%, #09111a 100%);
+      color: var(--text);
+      font-family: Inter, Arial, sans-serif;
+    }
+
+    .login-box {
+      width: min(480px, calc(100% - 32px));
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      padding: 2rem 1.4rem;
+    }
+
+    h1 {
+      margin: 0 0 0.5rem;
+      font-size: clamp(1.8rem, 3vw, 2.5rem);
+      letter-spacing: -0.07em;
+      text-transform: uppercase;
+    }
+
+    .subtitle {
+      margin: 0 0 1.5rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    form {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .field {
+      display: grid;
+      gap: 0.45rem;
+    }
+
+    label {
+      color: var(--muted);
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 800;
+    }
+
+    input {
+      width: 100%;
+      padding: 0.8rem 0.9rem;
+      border: 1px solid var(--line);
+      background: rgba(5,8,13,0.75);
+      color: var(--text);
+      font: inherit;
+    }
+
+    button {
+      margin-top: 0.5rem;
+      width: 100%;
+      padding: 0.9rem 1rem;
+      border: 1px solid rgba(74, 141, 255, 0.35);
+      background: rgba(74, 141, 255, 0.12);
+      color: var(--text);
+      font: inherit;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+
+    .error {
+      min-height: 1.2rem;
+      color: var(--red);
+      font-size: 0.8rem;
+    }
+
+    .footer-link {
+      margin-top: 1rem;
+      display: block;
+      text-align: center;
+      color: var(--muted);
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <main class="login-box">
+    <h1>Login</h1>
+    <p class="subtitle">Only logged-in users can submit a server to this monitor.</p>
+
+    <form id="login-form">
+      <div class="field">
+        <label for="username">Username</label>
+        <input id="username" name="username" type="text" value="admin" required />
+      </div>
+
+      <div class="field">
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password" value="admin" required />
+      </div>
+
+      <div id="login-error" class="error" aria-live="polite"></div>
+      <button type="submit">Login</button>
+    </form>
+
+    <a class="footer-link" href="servers.html">Back to monitor</a>
+  </main>
+
+  <script>
+    const validUsername = 'admin';
+    const validPassword = 'admin';
+
+    document.getElementById('login-form').addEventListener('submit', function (event) {
+      event.preventDefault();
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value;
+      const errorBox = document.getElementById('login-error');
+
+      if (username === validUsername && password === validPassword) {
+        localStorage.setItem('anarchyLoggedIn', 'true');
+        localStorage.setItem('anarchyUser', username);
+        window.location.href = 'submit.html';
+        return;
+      }
+
+      errorBox.textContent = 'Invalid username or password.';
+    });
+  </script>
+</body>
+</html>
